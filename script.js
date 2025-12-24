@@ -23,35 +23,36 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeExperience();
 });
 
-const video = document.getElementById('birthday-video');
-const videoSection = document.getElementById('video-section');
-const giftSection = document.getElementById('gift-section');
+function initializeExperience() {
+    const video = document.getElementById('birthday-video');
+    const videoSection = document.getElementById('video-section');
+    const giftSection = document.getElementById('gift-section');
 
-// Start video after black screen animation (2.5s)
-setTimeout(() => {
-    if (video) {
-        const startAll = () => {
-            video.play();
-            const bgMusic = document.getElementById('bg-music');
-            if (bgMusic) {
-                bgMusic.volume = 0.5;
-                bgMusic.play().catch(e => console.log('Music play failed', e));
-            }
-        };
+    // Start video after black screen animation (2.5s)
+    setTimeout(() => {
+        if (video) {
+            const startAll = () => {
+                video.play();
+                const bgMusic = document.getElementById('bg-music');
+                if (bgMusic) {
+                    bgMusic.volume = 0.5;
+                    bgMusic.play().catch(e => console.log('Music play failed', e));
+                }
+            };
 
-        video.play().then(() => {
-            // Autoplay success: start music too
-            const bgMusic = document.getElementById('bg-music');
-            if (bgMusic) {
-                bgMusic.volume = 0.5;
-                bgMusic.play().catch(e => console.log('Music play failed', e));
-            }
-        }).catch(err => {
-            console.log('Autoplay prevented, waiting for user interaction');
-            // Add visual indicator and click handler to start video if autoplay fails
-            const playPrompt = document.createElement('div');
-            playPrompt.id = 'play-prompt';
-            playPrompt.style.cssText = `
+            video.play().then(() => {
+                // Autoplay success: start music too
+                const bgMusic = document.getElementById('bg-music');
+                if (bgMusic) {
+                    bgMusic.volume = 0.5;
+                    bgMusic.play().catch(e => console.log('Music play failed', e));
+                }
+            }).catch(err => {
+                console.log('Autoplay prevented, waiting for user interaction');
+                // Add visual indicator and click handler to start video if autoplay fails
+                const playPrompt = document.createElement('div');
+                playPrompt.id = 'play-prompt';
+                playPrompt.style.cssText = `
                     position: fixed;
                     top: 50%;
                     left: 50%;
@@ -65,39 +66,38 @@ setTimeout(() => {
                     cursor: pointer;
                     animation: pulse 1.5s ease-in-out infinite;
                 `;
-            playPrompt.textContent = '▶️ Tap to Play';
-            document.body.appendChild(playPrompt);
+                playPrompt.textContent = '▶️ Tap to Play';
+                document.body.appendChild(playPrompt);
 
-            const startVideo = () => {
-                startAll();
-                playPrompt.remove();
-            };
+                const startVideo = () => {
+                    startAll();
+                    playPrompt.remove();
+                };
 
-            playPrompt.addEventListener('click', startVideo);
-            document.addEventListener('click', startVideo, { once: true });
+                playPrompt.addEventListener('click', startVideo);
+                document.addEventListener('click', startVideo, { once: true });
+            });
+        }
+    }, 2500);
+
+    // Monitor video progress and trigger transition at 16 seconds
+    if (video) {
+        video.addEventListener('timeupdate', () => {
+            if (!videoPlayed && video.currentTime >= 16) {
+                videoPlayed = true;
+                transitionToGiftBox();
+            }
+        });
+
+        // Fallback: also trigger on video end (in case video is shorter than 16s)
+        video.addEventListener('ended', () => {
+            if (!videoPlayed) {
+                videoPlayed = true;
+                transitionToGiftBox();
+            }
         });
     }
-}, 2500);
-
-// Monitor video progress and trigger transition at 16 seconds
-if (video) {
-    video.addEventListener('timeupdate', () => {
-        if (!videoPlayed && video.currentTime >= 16) {
-            videoPlayed = true;
-            transitionToGiftBox();
-        }
-    });
-
-    // Fallback: also trigger on video end (in case video is shorter than 16s)
-    video.addEventListener('ended', () => {
-        if (!videoPlayed) {
-            videoPlayed = true;
-            transitionToGiftBox();
-        }
-    });
 }
-}
-
 
 function transitionToGiftBox() {
     if (window.isTransitioning) return;
