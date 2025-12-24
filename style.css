@@ -1,0 +1,732 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Redmi Note 14 & Mobile Optimizations */
+:root {
+    /* Safe area insets for notch/camera cutout */
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    background: #000;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ========================================
+   BLACK OVERLAY OPENING ANIMATION
+   ======================================== */
+
+.black-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 10000;
+    animation: slideUp 2s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* ========================================
+   VIDEO SECTION
+   ======================================== */
+
+.section {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#video-section {
+    background: #000;
+    animation: fadeIn 1.5s ease 2s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.video-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+#birthday-video {
+    max-width: 90%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+/* ========================================
+   GIFT BOX SECTION
+   ======================================== */
+
+#gift-section {
+    background: linear-gradient(135deg, #1a0a2e 0%, #3d1e4f 50%, #1a0a2e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#gift-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    animation: ambientGlow 10s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes ambientGlow {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(10%, 10%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+#gift-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.gift-instruction {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.instruction-text {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
+/* ========================================
+   LOVE LETTER
+   ======================================== */
+
+.love-letter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.3) rotateX(45deg);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.love-letter.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotateX(0deg);
+    pointer-events: auto;
+}
+
+.love-letter.hidden {
+    display: block;
+}
+
+.letter-paper {
+    background: linear-gradient(to bottom, #fdfcf8 0%, #f5f1e8 100%);
+    padding: 3rem 2.5rem;
+    border-radius: 12px;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    max-width: 700px;
+    position: relative;
+    border: 1px solid rgba(139, 115, 85, 0.2);
+}
+
+.letter-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 30px,
+            rgba(139, 115, 85, 0.05) 30px,
+            rgba(139, 115, 85, 0.05) 31px);
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.letter-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(90, 62, 43, 0.1);
+    border: 2px solid rgba(90, 62, 43, 0.3);
+    border-radius: 50%;
+    color: #5a3e2b;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    font-weight: 300;
+}
+
+.letter-close:hover {
+    background: rgba(90, 62, 43, 0.2);
+    border-color: rgba(90, 62, 43, 0.5);
+    transform: scale(1.1) rotate(90deg);
+}
+
+.letter-close:active {
+    transform: scale(0.95) rotate(90deg);
+}
+
+.letter-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.letter-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    color: #5a3e2b;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.letter-decoration {
+    font-size: 2rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.letter-content {
+    color: #3d2817;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.letter-paragraph {
+    margin-bottom: 1.3rem;
+    font-family: 'Playfair Display', serif;
+    text-align: justify;
+}
+
+.letter-paragraph:first-child {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    color: #5a3e2b;
+    margin-bottom: 1.5rem;
+}
+
+.letter-signature {
+    margin-top: 2.5rem;
+    text-align: right;
+    font-family: 'Great Vibes', cursive;
+}
+
+.signature-text {
+    font-size: 1.2rem;
+    color: #5a3e2b;
+    margin-bottom: 0.3rem;
+}
+
+.signature-name {
+    font-size: 1.8rem;
+    color: #8b4513;
+    font-weight: 600;
+}
+
+/* ========================================
+   SCROLLBAR STYLING
+   ======================================== */
+
+.love-letter::-webkit-scrollbar {
+    width: 8px;
+}
+
+.love-letter::-webkit-scrollbar-track {
+    background: rgba(139, 115, 85, 0.1);
+    border-radius: 4px;
+}
+
+.love-letter::-webkit-scrollbar-thumb {
+    background: rgba(139, 115, 85, 0.3);
+    border-radius: 4px;
+}
+
+.love-letter::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 115, 85, 0.5);
+}
+
+/* ========================================
+   LOADING SCREEN
+   ======================================== */
+
+/* ========================================
+   CUSTOM HEART-TO-BOX LOADER
+   ======================================== */
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0515;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+    transition: opacity 1s ease, visibility 1s;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.heart-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 2rem;
+}
+
+.heart-particle {
+    position: absolute;
+    font-size: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: heart-assemble 3s infinite ease-in-out;
+    opacity: 0;
+}
+
+@keyframes heart-assemble {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2);
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+}
+
+.loading-text {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: pulseLoader 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseLoader {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Page Transition Overlay */
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0515;
+    z-index: 999;
+    transform: translateY(100%);
+    pointer-events: none;
+}
+
+.transition-overlay.swiping {
+    animation: slide-transition 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@keyframes slide-transition {
+    0% {
+        transform: translateY(100%);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* ========================================
+   ENHANCED GIFT SECTION
+   ======================================== */
+
+.gift-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulseGlow 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* ========================================
+   REDMI NOTE 14 SPECIFIC OPTIMIZATIONS
+   ======================================== */
+
+/* Redmi Note 14 has 6.67" AMOLED, 1080x2400, 20:9 aspect ratio */
+@media (max-width: 768px) and (min-height: 600px) {
+
+    /* Optimize for tall displays (20:9, 19.5:9, etc) */
+    .section {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+        padding-top: var(--safe-area-top);
+        padding-bottom: var(--safe-area-bottom);
+    }
+
+    /* Ensure video fits well on tall screens */
+    #birthday-video {
+        max-height: 75vh;
+        max-width: 100%;
+    }
+
+    /* Optimize 3D canvas for mobile GPU */
+    #gift-canvas {
+        will-change: transform;
+        transform: translateZ(0);
+    }
+
+    /* Reduce motion for battery saving */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* Better touch targets for mobile */
+    .instruction-text {
+        padding: 1rem;
+        font-size: 1.3rem;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+    }
+
+    /* AMOLED optimization - darker blacks save battery */
+    body {
+        background: #000;
+    }
+
+    #gift-section {
+        background: linear-gradient(135deg, #0a0515 0%, #2d1540 50%, #0a0515 100%);
+    }
+}
+
+/* Mobile viewport fix */
+@media (max-width: 768px) {
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .section {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+
+    /* Video section mobile optimization */
+    #birthday-video {
+        max-width: 95%;
+        max-height: 85vh;
+    }
+
+    /* Gift box section - ensure full visibility */
+    #gift-section {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+
+    #gift-canvas {
+        touch-action: none;
+    }
+
+    .gift-instruction {
+        bottom: 15%;
+        width: 90%;
+    }
+
+    .instruction-text {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
+
+    /* Love letter mobile optimization */
+    .love-letter {
+        max-width: 95%;
+        max-height: 85vh;
+        padding: 0.5rem;
+    }
+
+    .letter-paper {
+        padding: 2rem 1.5rem;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .letter-title {
+        font-size: 2rem;
+    }
+
+    .letter-content {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .signature-name {
+        font-size: 1.5rem;
+    }
+
+    .letter-decoration {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Small mobile devices */
+    #birthday-video {
+        max-width: 100%;
+        max-height: 70vh;
+        border-radius: 4px;
+    }
+
+    .gift-instruction {
+        bottom: 12%;
+    }
+
+    .instruction-text {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .love-letter {
+        max-width: 98%;
+        max-height: 90vh;
+        padding: 0.25rem;
+    }
+
+    .letter-paper {
+        padding: 1.5rem 1rem;
+        border-radius: 8px;
+    }
+
+    .letter-title {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .letter-content {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .letter-paragraph {
+        margin-bottom: 1rem;
+    }
+
+    .letter-paragraph:first-child {
+        font-size: 1.1rem;
+    }
+
+    .signature-text {
+        font-size: 1rem;
+    }
+
+    .signature-name {
+        font-size: 1.3rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Make clickable areas more obvious */
+    #gift-canvas {
+        cursor: pointer;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 896px) and (orientation: landscape) {
+    .section {
+        min-height: 100vh;
+    }
+
+    #birthday-video {
+        max-height: 90vh;
+        max-width: auto;
+    }
+
+    .letter-paper {
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    .gift-instruction {
+        bottom: 8%;
+    }
+}

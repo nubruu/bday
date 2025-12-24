@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- Redmi Note 14 & Mobile Optimizations -->
+    <meta name="theme-color" content="#0a0515">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Happy Birthday My Love 💖</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-By-Yuna.mp3"
+            type="audio/mp3">
+    </audio>
+
+    <!-- Page Transition Overlay -->
+    <div class="transition-overlay" id="transition-overlay"></div>
+
+    <!-- Black Overlay Opening Animation -->
+    <div id="black-overlay" class="black-overlay"></div>
+
+    <!-- Section 1: Video Introduction -->
+    <section id="video-section" class="section active">
+        <div class="video-container">
+            <video id="birthday-video" playsinline preload="auto" autoplay>
+                <source src="candle.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <!-- Section 2: 3D Gift Box Section -->
+    <section id="gift-section" class="section">
+        <div class="gift-glow"></div>
+        <canvas id="gift-canvas"></canvas>
+        <div class="gift-instruction">
+            <p class="instruction-text">Click the gift to reveal your surprise...</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Love Letter Reveal -->
+    <div id="love-letter" class="love-letter hidden">
+        <div class="letter-paper">
+            <button class="letter-close" id="letter-close" aria-label="Close letter">×</button>
+            <div class="letter-header">
+                <h1 class="letter-title">To My Dearest Love</h1>
+                <div class="letter-decoration">💖</div>
+            </div>
+
+            <div class="letter-content">
+                <p class="letter-paragraph">
+                    Happy Birthday Mithila! 🎉
+                </p>
+
+                <p class="letter-paragraph">
+                    A year ago, we were just teammates in Free Fire, dropping into maps and looking for loot. I
+                    didn’t realize then that I had already found the best "drop" of my life—you.
+                </p>
+
+                <p class="letter-paragraph">
+                    From our first match to the moment I proposed, being by your side has been the greatest
+                    adventure. You’re the only one I want to share my medkits with, and the only person I’ll
+                    always rush to revive.
+                </p>
+
+                <p class="letter-paragraph">
+                    We really are made for each other. You aren't just my partner in the game; you are the love
+                    of my life. Happy Birthday, beautiful! Let’s keep winning at life together.
+                </p>
+
+                <p class="letter-paragraph">
+                    I love you forever.
+                </p>
+            </div>
+
+            <div class="letter-signature">
+                <p class="signature-text">Forever Yours,</p>
+                <p class="signature-name">Your Love ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Three.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Load OrbitControls for touch/drag interaction -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Load custom scripts -->
+    <script src="gift-box.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
